@@ -1,88 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SafeZone AI</title>
-<style>
-body {
-    font-family: Arial;
-    background: #0f172a;
-    color: white;
-    text-align: center;
-    padding: 20px;
-}
-.container {
-    max-width: 400px;
-    margin: auto;
-    background: #1e293b;
-    padding: 20px;
-    border-radius: 10px;
-}
-input, button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    border: none;
-}
-button {
-    background: #22c55e;
-    color: white;
-    font-weight: bold;
-}
-.result {
-    margin-top: 20px;
-    padding: 15px;
-    border-radius: 10px;
-}
-.low { background: green; }
-.medium { background: orange; }
-.high { background: red; }
-</style>
-</head>
-<body>
+🚦 SafeZone AI
 
-<h1>🚦 SafeZone AI</h1>
-<p>Accident Risk Prediction System</p>
+Accident Risk Prediction & Prevention System
 
-<div class="container">
-    <input type="text" id="location" placeholder="Enter your location">
+💡 Overview
 
-    <button onclick="checkRisk()">Check Safety</button>
+SafeZone AI helps users identify accident-prone zones and choose safer routes instead of just faster ones.
 
-    <div id="output"></div>
-</div>
+🚀 Features
 
-<script>
-function checkRisk() {
-    const risks = ["Low", "Medium", "High"];
-    const random = Math.floor(Math.random() * 3);
-    const risk = risks[random];
+- Risk Zone Detection (Low / Medium / High)
+- Smart Safety Suggestions
+- User-friendly Interface
+- Preventive Approach (not reactive)
 
-    let colorClass = "";
-    let message = "";
+🧠 How It Works
 
-    if (risk === "Low") {
-        colorClass = "low";
-        message = "Safe route available. Travel confidently.";
-    } else if (risk === "Medium") {
-        colorClass = "medium";
-        message = "Moderate risk. Drive carefully.";
-    } else {
-        colorClass = "high";
-        message = "High accident risk detected! Choose safer route.";
-    }
+User enters location → System analyzes risk → Displays safety level → Suggests safer route
 
-    document.getElementById("output").innerHTML = `
-        <div class="result ${colorClass}">
-            <h2>${risk} Risk Zone</h2>
-            <p>${message}</p>
-        </div>
-    `;
-}
-</script>
+🎯 Goal
 
-</body>
-</html># safezone-ai
-AI-based Accident Risk Prediction &amp; Prevention System for safer roads in India
+To reduce road accidents and save lives using AI-driven insights.
+
+👨‍💻 Team
+
+Faith Coders
+
+🔗 Live Demo
+
+(Will add after enabling GitHub Pages)
