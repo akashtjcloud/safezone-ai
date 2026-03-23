@@ -106,7 +106,7 @@ function checkRisk() {
 
   document.getElementById("output").innerHTML =
     `<div class="result ${colorClass}">
-      ${risk} Risk Zone <br><br> ${message}
+      ${risk === "Low" ? "🟢 LOW" : risk === "Medium" ? "🟡 MEDIUM" : "🔴 HIGH"} Risk Zone <br><br> ${message}
     </div>`;
 }
 </script>
