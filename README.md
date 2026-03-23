@@ -29,4 +29,4 @@ Faith Coders
 https://akashtjcloud.github.io/safezone-ai
 
 ## 📸 Demo Preview
-![Demo](screenshot.png)
+![Demo](screenshot.jpg)
