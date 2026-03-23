@@ -1,2 +1,88 @@
-# safezone-ai
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeZone AI</title>
+<style>
+body {
+    font-family: Arial;
+    background: #0f172a;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+.container {
+    max-width: 400px;
+    margin: auto;
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 10px;
+}
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+}
+button {
+    background: #22c55e;
+    color: white;
+    font-weight: bold;
+}
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+}
+.low { background: green; }
+.medium { background: orange; }
+.high { background: red; }
+</style>
+</head>
+<body>
+
+<h1>🚦 SafeZone AI</h1>
+<p>Accident Risk Prediction System</p>
+
+<div class="container">
+    <input type="text" id="location" placeholder="Enter your location">
+
+    <button onclick="checkRisk()">Check Safety</button>
+
+    <div id="output"></div>
+</div>
+
+<script>
+function checkRisk() {
+    const risks = ["Low", "Medium", "High"];
+    const random = Math.floor(Math.random() * 3);
+    const risk = risks[random];
+
+    let colorClass = "";
+    let message = "";
+
+    if (risk === "Low") {
+        colorClass = "low";
+        message = "Safe route available. Travel confidently.";
+    } else if (risk === "Medium") {
+        colorClass = "medium";
+        message = "Moderate risk. Drive carefully.";
+    } else {
+        colorClass = "high";
+        message = "High accident risk detected! Choose safer route.";
+    }
+
+    document.getElementById("output").innerHTML = `
+        <div class="result ${colorClass}">
+            <h2>${risk} Risk Zone</h2>
+            <p>${message}</p>
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html># safezone-ai
 AI-based Accident Risk Prediction &amp; Prevention System for safer roads in India
