@@ -25,6 +25,8 @@ To reduce road accidents and save lives using AI-driven insights.
 
 Faith Coders
 
-🔗 Live Demo
+## 🔗 Live Demo
+https://akashtjcloud.github.io/safezone-ai
 
-(Will add after enabling GitHub Pages)
+## 📸 Demo Preview
+![Demo](screenshot.png)
