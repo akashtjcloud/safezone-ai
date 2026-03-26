@@ -1,70 +1,86 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SafeZone AI</title>
+  <title>SafeZone AI - Smart Navigation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: Arial;
       background: linear-gradient(135deg, #0f172a, #1e293b);
       color: white;
       text-align: center;
     }
 
-    h1 {
-      margin-top: 40px;
-      font-size: 32px;
-    }
+    h1 { margin-top: 20px; }
 
     .card {
       background: #1e293b;
-      margin: 30px auto;
-      padding: 25px;
+      margin: 20px auto;
+      padding: 20px;
       border-radius: 15px;
-      width: 85%;
+      width: 90%;
       max-width: 400px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
     }
 
     input {
       width: 90%;
-      padding: 12px;
+      padding: 10px;
+      margin: 10px 0;
       border-radius: 8px;
       border: none;
-      margin-bottom: 15px;
-      font-size: 16px;
     }
 
     button {
       background: #22c55e;
       border: none;
-      padding: 12px 20px;
+      padding: 12px;
       border-radius: 8px;
       color: white;
-      font-size: 16px;
+      width: 95%;
       cursor: pointer;
-    }
-
-    button:hover {
-      background: #16a34a;
+      font-size: 16px;
     }
 
     .result {
       margin-top: 20px;
       padding: 15px;
       border-radius: 10px;
+    }
+
+    .low { background: green; }
+    .medium { background: orange; }
+    .high { background: red; }
+
+    .alert {
+      margin-top: 10px;
       font-weight: bold;
     }
 
-    .low { background: #16a34a; }
-    .medium { background: #facc15; color: black; }
-    .high { background: #dc2626; }
-
-    .map {
-      margin-top: 20px;
-      font-size: 14px;
+    .info {
+      font-size: 13px;
+      margin-top: 10px;
       opacity: 0.8;
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #cbd5f5;
+    }
+
+    .popup {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: red;
+      padding: 15px;
+      border-radius: 10px;
+      display: none;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      z-index: 1000;
     }
   </style>
 </head>
@@ -72,43 +88,112 @@
 <body>
 
 <h1>🚦 SafeZone AI</h1>
-<p>Accident Risk Prediction System</p>
+<p>Smart Safety Navigation System</p>
 
 <div class="card">
-  <input type="text" placeholder="Enter your location">
 
-  <button onclick="checkRisk()">Check Safety</button>
+  <input type="text" placeholder="Enter destination (College, Shop, City...)" id="location">
 
+  <button onclick="startNavigation()">Start Safe Navigation</button>
+
+  <div id="status" class="status"></div>
   <div id="output"></div>
 
-  <div class="map">📍 Simulated Map-Based Risk Detection</div>
+  <div class="info">📍 AI Navigation + GPS + Safety Monitoring</div>
+
 </div>
 
+<div id="popup" class="popup">🚨 Overspeed! Slow down!</div>
+
 <script>
-function checkRisk() {
-  const risks = ["Low", "Medium", "High"];
-  const random = Math.floor(Math.random() * 3);
-  const risk = risks[random];
 
-  let colorClass = "";
-  let message = "";
+let speed = 40;
+let limit = 50;
+let interval;
 
-  if (risk === "Low") {
-    colorClass = "low";
-    message = "Safe route available. Travel confidently.";
-  } else if (risk === "Medium") {
-    colorClass = "medium";
-    message = "Moderate risk. Drive carefully.";
-  } else {
-    colorClass = "high";
-    message = "High accident risk detected! Choose safer route.";
+function startNavigation() {
+
+  let location = document.getElementById("location").value;
+
+  if (!location) {
+    alert("Please enter destination");
+    return;
   }
 
-  document.getElementById("output").innerHTML =
-    `<div class="result ${colorClass}">
-      ${risk === "Low" ? "🟢 LOW" : risk === "Medium" ? "🟡 MEDIUM" : "🔴 HIGH"} Risk Zone <br><br> ${message}
-    </div>`;
+  document.getElementById("status").innerHTML =
+    `📍 Searching route to <b>${location}</b>...`;
+
+  document.getElementById("output").innerHTML = "";
+
+  setTimeout(() => {
+
+    document.getElementById("status").innerHTML =
+      `🗺️ Route to <b>${location}</b> loaded. Navigation started...`;
+
+    // choose road type once
+    let limits = [30, 50, 80];
+    limit = limits[Math.floor(Math.random() * limits.length)];
+
+    interval = setInterval(() => {
+
+      let change = Math.floor(Math.random() * 10) - 5;
+      speed += change;
+
+      if (speed < 20) speed = 20;
+      if (speed > 120) speed = 120;
+
+      let risk = "";
+      let alertMsg = "";
+      let colorClass = "";
+
+      if (speed <= limit) {
+        risk = "Low";
+        colorClass = "low";
+        alertMsg = "✅ Safe speed. Continue driving.";
+        hidePopup();
+      }
+
+      else if (speed <= limit + 15) {
+        risk = "Medium";
+        colorClass = "medium";
+        alertMsg = "⚠️ Slightly high speed. Slow down.";
+        hidePopup();
+      }
+
+      else {
+        risk = "High";
+        colorClass = "high";
+        alertMsg = "🚨 Overspeed detected! Reduce speed immediately.";
+        showPopup();
+      }
+
+      document.getElementById("output").innerHTML =
+        `<div class="result ${colorClass}">
+          <h3>${risk} Risk Zone</h3>
+          <p>Speed Limit: ${limit} km/h</p>
+          <p>Current Speed: ${speed} km/h</p>
+          <div class="alert">${alertMsg}</div>
+        </div>`;
+
+    }, 2000);
+
+  }, 1500); // loading delay
+
 }
+
+function showPopup() {
+  const popup = document.getElementById("popup");
+  popup.style.display = "block";
+
+  setTimeout(() => {
+    popup.style.display = "none";
+  }, 2000);
+}
+
+function hidePopup() {
+  document.getElementById("popup").style.display = "none";
+}
+
 </script>
 
 </body>
